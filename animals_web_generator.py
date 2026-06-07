@@ -75,11 +75,14 @@ def serialize_animal(animal_obj):
     return output
 
 
-def create_html_animal(data):
+def create_html_animal(name, data):
     """adds the animals information in a given html template"""
-    output = ""
-    for animal in data:
-        output += serialize_animal(animal)
+    if not data:
+        output = f"<h2>The animal {name} doesn't exist.</h2>"
+    else:
+        output = ""
+        for animal in data:
+            output += serialize_animal(animal)
     html_data = read_html_template("animals_template.html")
     return html_data.replace("__REPLACE_ANIMALS_INFO__", output)
 
@@ -157,7 +160,7 @@ def filter_structure_skin_type(animals_data):
 def main():
     user_animal = get_user_animal()
     animals_data = request_info(user_animal)
-    html_new_data = create_html_animal(animals_data)
+    html_new_data = create_html_animal(user_animal, animals_data)
     write_new_html(html_new_data, "animals.html")
     filter_structure_skin_type(animals_data)
 
