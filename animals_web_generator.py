@@ -1,16 +1,6 @@
-import requests
+import data_fetcher
 
 API_KEY = "x2TD0QIcmhca8SymypDwHpWCtBrV6TP6TU6maU9J"
-
-
-def request_info(animal):
-    """Requests information of the api given an animal"""
-    api_url = f"https://api.api-ninjas.com/v1/animals?name={animal}"
-    response = requests.get(api_url, headers={"X-Api-Key": API_KEY})
-    if response.status_code == requests.codes.ok:
-        return response.json()
-    else:
-        print("Error:", response.status_code, response.text)
 
 
 def get_user_animal():
@@ -128,7 +118,7 @@ def get_user_choice_skin_type(available_skin_types):
         print("Please enter an available choice from the list.")
 
 
-def filter_structure_skin_type(animals_data):
+def filter_structure_skin_type(name, animals_data):
     """asks the user if he wants to create a website for the animals that
     have a particular skin type, if yes then the skin type choice is asked.
     The function creates a html file with the animals with the skin type
@@ -145,9 +135,9 @@ def filter_structure_skin_type(animals_data):
                 animals_data, user_choice
             )
             filtered_html_filename = "animal_" + user_choice.lower() + ".html"
-            html_filtered_data = create_html_animal(data_filtered_skin_type)
+            html_filtered_data = create_html_animal(name, data_filtered_skin_type)
             html_filtered_data = html_filtered_data.replace(
-                "My Animal Repository", "Animals with " + user_choice
+                "My Animal Repository", f"{name} with " + user_choice
             )
             write_new_html(html_filtered_data, filtered_html_filename)
         elif user_answer.lower() == "n":
@@ -159,10 +149,10 @@ def filter_structure_skin_type(animals_data):
 
 def main():
     user_animal = get_user_animal()
-    animals_data = request_info(user_animal)
+    animals_data = data_fetcher.fetch_data(user_animal)
     html_new_data = create_html_animal(user_animal, animals_data)
     write_new_html(html_new_data, "animals.html")
-    filter_structure_skin_type(animals_data)
+    filter_structure_skin_type(user_animal, animals_data)
 
 
 if __name__ == "__main__":
