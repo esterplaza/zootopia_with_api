@@ -1,6 +1,13 @@
 import requests
+import os
+from dotenv import load_dotenv
 
-API_KEY = "x2TD0QIcmhca8SymypDwHpWCtBrV6TP6TU6maU9J"
+load_dotenv()
+
+API_KEY = os.getenv('API_KEY')
+
+print(API_KEY)
+
 
 def fetch_data(animal_name):
     """
@@ -25,3 +32,4 @@ def fetch_data(animal_name):
         return response.json()
     else:
         print("Error:", response.status_code, response.text)
+        return []

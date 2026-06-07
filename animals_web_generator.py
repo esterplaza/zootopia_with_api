@@ -1,12 +1,11 @@
 import data_fetcher
 
-API_KEY = "x2TD0QIcmhca8SymypDwHpWCtBrV6TP6TU6maU9J"
-
 
 def get_user_animal():
     """asks the user for an animal and returns the answer"""
     animal = input("Enter a name of an animal: ")
     return animal
+
 
 def read_html_template(html_path):
     """reads a html template file"""
