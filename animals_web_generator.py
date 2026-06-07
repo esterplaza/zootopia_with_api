@@ -88,7 +88,7 @@ def get_available_skin_types(animals_data):
     available_skin_types = []
     for animal in animals_data:
         a_skin_type = get_skin_type(animal)
-        if a_skin_type not in available_skin_types:
+        if a_skin_type and a_skin_type not in available_skin_types:
             available_skin_types.append(a_skin_type)
     return available_skin_types
 
@@ -149,10 +149,13 @@ def filter_structure_skin_type(name, animals_data):
 def main():
     user_animal = get_user_animal()
     animals_data = data_fetcher.fetch_data(user_animal)
+    html_new_data = create_html_animal(user_animal, animals_data)
+    write_new_html(html_new_data, "animals.html")
     if animals_data:
-        html_new_data = create_html_animal(user_animal, animals_data)
-        write_new_html(html_new_data, "animals.html")
         filter_structure_skin_type(user_animal, animals_data)
+    else:
+        print("For some reason the animal information is empty, the created website would be also empty.")
+        print("Check the error messages for more information.")
 
 
 if __name__ == "__main__":

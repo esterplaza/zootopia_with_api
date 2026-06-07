@@ -28,6 +28,9 @@ def fetch_data(animal_name):
     try:
         response = requests.get(api_url, headers={"X-Api-Key": API_KEY}, timeout=10)
         if response.status_code == requests.codes.ok:
+            data = response.json()
+            if not data:
+                print(f"The animal with the name {animal_name} was not found.")
             return response.json()
         print("Error:", response.status_code, response.text)
         return None
