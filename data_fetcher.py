@@ -1,5 +1,5 @@
-import requests
 import os
+import requests
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -27,9 +27,12 @@ def fetch_data(animal_name):
     },
     """
     api_url = f"https://api.api-ninjas.com/v1/animals?name={animal_name}"
-    response = requests.get(api_url, headers={"X-Api-Key": API_KEY})
-    if response.status_code == requests.codes.ok:
-        return response.json()
-    else:
+    try:
+        response = requests.get(api_url, headers={"X-Api-Key": API_KEY}, timeout=10)
+        if response.status_code == requests.codes.ok:
+            return response.json()
         print("Error:", response.status_code, response.text)
-        return []
+        return None
+    except requests.exceptions.Timeout:
+        print("Timed out")
+        return None

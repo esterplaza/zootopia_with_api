@@ -17,7 +17,7 @@ def write_new_html(html_string, filename):
     """writes a new html file"""
     with open(filename, "w", encoding="utf-8") as new_html_file:
         new_html_file.write(html_string)
-    print("Website was successfully generated to the file animals.html.")
+    print(f"Website was successfully generated to the file {filename}.")
 
 
 def get_data_from_file(animal):
@@ -149,9 +149,10 @@ def filter_structure_skin_type(name, animals_data):
 def main():
     user_animal = get_user_animal()
     animals_data = data_fetcher.fetch_data(user_animal)
-    html_new_data = create_html_animal(user_animal, animals_data)
-    write_new_html(html_new_data, "animals.html")
-    filter_structure_skin_type(user_animal, animals_data)
+    if animals_data:
+        html_new_data = create_html_animal(user_animal, animals_data)
+        write_new_html(html_new_data, "animals.html")
+        filter_structure_skin_type(user_animal, animals_data)
 
 
 if __name__ == "__main__":
