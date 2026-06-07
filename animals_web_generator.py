@@ -13,6 +13,11 @@ def request_info(animal):
         print("Error:", response.status_code, response.text)
 
 
+def get_user_animal():
+    """asks the user for an animal and returns the answer"""
+    animal = input("Enter a name of an animal: ")
+    return animal
+
 def read_html_template(html_path):
     """reads a html template file"""
     with open(html_path, "r", encoding="utf-8") as html_file:
@@ -23,6 +28,7 @@ def write_new_html(html_string, filename):
     """writes a new html file"""
     with open(filename, "w", encoding="utf-8") as new_html_file:
         new_html_file.write(html_string)
+    print("Website was successfully generated to the file animals.html.")
 
 
 def get_data_from_file(animal):
@@ -149,7 +155,8 @@ def filter_structure_skin_type(animals_data):
 
 
 def main():
-    animals_data = request_info("Fox")
+    user_animal = get_user_animal()
+    animals_data = request_info(user_animal)
     html_new_data = create_html_animal(animals_data)
     write_new_html(html_new_data, "animals.html")
     filter_structure_skin_type(animals_data)
